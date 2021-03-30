@@ -1,0 +1,12 @@
+package com.tamchack.tamchack.payload.request;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class RevisePasswordRequest {
+    private String password;
+}

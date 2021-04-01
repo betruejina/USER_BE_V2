@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class StoreuserServiceImpl implements StoreuserService{
 
+
     private final StoreuserRepository storeuserRepository;
     private final StoreRepository storeRepository;
 

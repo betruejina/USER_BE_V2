@@ -1,5 +1,6 @@
 package com.tamchack.tamchack.domain.book;
 
+import com.tamchack.tamchack.domain.store.BookmarkKey;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,21 +8,20 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
-@Entity(name = "tbl_book")
+@Entity(name = "tbl_stock")
 @Getter
 @Builder
+@IdClass(StockKey.class)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book {
+public class Stock {
 
     @Id
-    private int id;
+    private int storeId;
 
-    private String bookName;
-
-    private String author;
-
-    private String publisher;
+    @Id
+    private int bookId;
 
 }

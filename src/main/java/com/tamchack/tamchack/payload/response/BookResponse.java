@@ -1,18 +1,22 @@
-package com.tamchack.tamchack.payload.request;
+package com.tamchack.tamchack.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookRequest {
-    private String bookName;
+@Builder
+public class BookResponse {
+
+    private Integer bookId;
+
+    private String name;
+
     private String author;
+
     private String publisher;
-    private MultipartFile image;
+
 }

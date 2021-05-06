@@ -1,7 +1,6 @@
 package com.tamchack.tamchack.service.store;
 
 import com.tamchack.tamchack.domain.store.Store;
-import com.tamchack.tamchack.payload.request.ReviseStoreRequest;
 import com.tamchack.tamchack.payload.response.ApplicationListResponse;
 import com.tamchack.tamchack.payload.response.StoreResponse;
 import com.tamchack.tamchack.repository.StoreRepository;

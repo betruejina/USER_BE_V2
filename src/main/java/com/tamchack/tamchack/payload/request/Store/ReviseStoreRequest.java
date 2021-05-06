@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.payload.request;
+package com.tamchack.tamchack.payload.request.Store;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviseStoreRequest {
+
     private String storeNumber;
+
     private String openingHours;
+
 }

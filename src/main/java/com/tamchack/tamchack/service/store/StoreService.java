@@ -1,6 +1,5 @@
 package com.tamchack.tamchack.service.store;
 
-import com.tamchack.tamchack.payload.request.ReviseStoreRequest;
 import com.tamchack.tamchack.payload.response.ApplicationListResponse;
 import org.springframework.data.domain.Pageable;
 

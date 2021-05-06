@@ -1,7 +1,7 @@
 package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.domain.book.Book;
-import com.tamchack.tamchack.payload.request.BookRequest;
+import com.tamchack.tamchack.payload.request.Book.BookRequest;
 import com.tamchack.tamchack.payload.response.ApplicationListResponse;
 import com.tamchack.tamchack.payload.response.BookResponse;
 import com.tamchack.tamchack.repository.BookRepository;

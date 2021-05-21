@@ -1,6 +1,6 @@
 package com.tamchack.tamchack.service.member;
 
-import com.tamchack.tamchack.JwtProvider;
+import com.tamchack.tamchack.security.token.JwtProvider;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.domain.store.Store;
@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService{
                 .ifPresent(u -> {
                     throw new UserAlreadyEsixtsException();
                 });
-        
+
         storeuserRepository.save(
                 Storeuser.builder()
                             .id(storeuserSignUpRequest.getId())

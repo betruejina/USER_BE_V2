@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.exception.basic;
+package com.tamchack.tamchack.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,8 @@ public enum ErrorCode {
     USER_NOT_FOUND(404,"User Not Found"),
     COMMENT_NOT_FOUND(404, "Comment Not Found"),
     APPLICATION_NOT_FOUND(404,"Application Not Found"),
-    IMAGE_NOT_FOUND(404, "Image Not Found");
+    IMAGE_NOT_FOUND(404, "Image Not Found"),
+    USER_ALREADY_EXISTS_EXCEPTION(409,"User Already Exists");
 
     private final int status;
 

@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.exception.basic;
+package com.tamchack.tamchack.error;
 
 public class BasicException extends RuntimeException{
 

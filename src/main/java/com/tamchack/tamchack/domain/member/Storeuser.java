@@ -20,4 +20,12 @@ public class Storeuser {
 
     private String password;
 
+    public Storeuser update(String password) {
+
+        this.password = password;
+
+        return this;
+
+    }
+
 }

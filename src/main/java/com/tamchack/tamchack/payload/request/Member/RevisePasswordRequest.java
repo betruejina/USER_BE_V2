@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RevisePassword {
+public class RevisePasswordRequest {
 
     private String id;
 

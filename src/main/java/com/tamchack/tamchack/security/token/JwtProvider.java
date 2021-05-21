@@ -1,4 +1,4 @@
-package com.tamchack.tamchack;
+package com.tamchack.tamchack.security.token;
 
 import com.tamchack.tamchack.exception.ExpiredTokenException;
 import com.tamchack.tamchack.exception.InvalidTokenException;

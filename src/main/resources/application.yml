@@ -1,6 +1,0 @@
-spring:
-  datasource:
-    url: "jdbc:mysql://tam-chack.cwjdlhpngx8e.us-east-2.rds.amazonaws.com:3306/tam_chack?serverTimezone=UTC"
-    username: "yujina"
-    password: "tamchack12"
-    driver-class-name: com.mysql.cj.jdbc.Driver

@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.payload.request.Member;
+package com.tamchack.tamchack.payload.request.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

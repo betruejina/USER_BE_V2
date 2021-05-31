@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.payload.response;
+package com.tamchack.tamchack.payload.response.address;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

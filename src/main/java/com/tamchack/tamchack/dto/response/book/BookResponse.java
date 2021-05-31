@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.payload.response;
+package com.tamchack.tamchack.payload.response.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,16 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StoreResponse {
+public class BookResponse {
 
-    private Integer storeId;
+    private Integer bookId;
 
     private String name;
 
-    private String address;
+    private String author;
 
-    private String number;
-
-    private String openingHours;
+    private String publisher;
 
 }

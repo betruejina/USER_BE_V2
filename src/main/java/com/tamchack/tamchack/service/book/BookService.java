@@ -1,7 +1,7 @@
 package com.tamchack.tamchack.service.book;
 
-import com.tamchack.tamchack.payload.request.Book.BookRequest;
-import com.tamchack.tamchack.payload.response.ApplicationListResponse;
+import com.tamchack.tamchack.dto.request.book.BookRequest;
+import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import org.springframework.data.domain.Pageable;
 
 public interface BookService {

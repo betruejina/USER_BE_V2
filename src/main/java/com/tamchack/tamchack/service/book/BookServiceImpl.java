@@ -1,9 +1,9 @@
 package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.domain.book.Book;
-import com.tamchack.tamchack.payload.request.Book.BookRequest;
-import com.tamchack.tamchack.payload.response.ApplicationListResponse;
-import com.tamchack.tamchack.payload.response.BookResponse;
+import com.tamchack.tamchack.dto.request.book.BookRequest;
+import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
+import com.tamchack.tamchack.dto.response.book.BookResponse;
 import com.tamchack.tamchack.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,9 +21,10 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public void inPutBook(BookRequest bookRequest) {
+
         Book book = bookRepository.save(
                 Book.builder()
-                        .bookName(bookRequest.getBookName())
+                        .name(bookRequest.getBookName())
                         .author(bookRequest.getAuthor())
                         .publisher(bookRequest.getPublisher())
                         .build()
@@ -35,22 +36,23 @@ public class BookServiceImpl implements BookService{
     @Override
     public ApplicationListResponse searchBook(String query, Pageable page) {
         return getApplications(bookRepository
-                .findAllByBookNameConstains(query, page));
+                .findAllByNameContains(query, page));
     }
 
     @Override
     public ApplicationListResponse searchBookInStore(Integer storeId, String query, Pageable page) {
         return getApplications(bookRepository
-                .findAllByStoreIdAndBookNameContains(storeId, query, page));
+                .findAllByStoreIdAndNameContains(storeId, query, page));
     }
 
     private ApplicationListResponse getApplications(Page<Book> bookPage) {
+
         List<BookResponse> bookResponses = new ArrayList<>();
 
         for(Book book : bookPage){
             bookResponses.add(
                     BookResponse.builder()
-                            .name(book.getBookName())
+                            .name(book.getName())
                             .author(book.getAuthor())
                             .publisher(book.getPublisher())
                             .build()

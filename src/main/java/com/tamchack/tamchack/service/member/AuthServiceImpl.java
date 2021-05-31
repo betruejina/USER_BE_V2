@@ -1,39 +1,46 @@
 package com.tamchack.tamchack.service.member;
 
-import com.tamchack.tamchack.security.token.JwtProvider;
+import com.tamchack.tamchack.security.token.JWTProvider;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.exception.UserNotFoundException;
-import com.tamchack.tamchack.payload.request.Member.SignInRequest;
-import com.tamchack.tamchack.payload.response.TokenResponse;
+import com.tamchack.tamchack.dto.request.member.SignInRequest;
+import com.tamchack.tamchack.dto.response.member.TokenResponse;
 import com.tamchack.tamchack.repository.StoreuserRepository;
 import com.tamchack.tamchack.repository.UserRepository;
+import com.tamchack.tamchack.service.store.StoreServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final StoreuserRepository storeuserRepository;
-    private final JwtProvider jwtProvider;
+    private final JWTProvider jwtProvider;
 
     @Override
     public TokenResponse userSignIn(SignInRequest signInRequest) {
-        User user = userRepository.findByIdAndPassword(signInRequest.getId(), signInRequest.getPassword());
-        if(user == null){
-            throw new UserNotFoundException(); //수정
-        }
+
+        String id = signInRequest.getId();
+        String password = signInRequest.getPassword();
+
+        User user = userRepository.findByIdAndPassword(id, password)
+                .orElseThrow(UserNotFoundException::new);
+
         return createTokenResponse(user.getId());
     }
 
     @Override
     public TokenResponse storeuserSignIn(SignInRequest signInRequest) {
-        Storeuser storeuser = storeuserRepository.findByIdAndPassword(signInRequest.getId(), signInRequest.getPassword());
-        if(storeuser == null){
-            throw new UserNotFoundException();
-        }
+
+        String id = signInRequest.getId();
+        String password = signInRequest.getPassword();
+
+        Storeuser storeuser = storeuserRepository.findByIdAndPassword(id, password)
+                .orElseThrow(UserNotFoundException::new);
+
         return createTokenResponse(storeuser.getId());
     }
 

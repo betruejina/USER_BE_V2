@@ -1,8 +1,8 @@
 package com.tamchack.tamchack.service.member;
 
-import com.tamchack.tamchack.payload.request.Member.RevisePasswordRequest;
-import com.tamchack.tamchack.payload.request.Member.StoreuserSignUpRequest;
-import com.tamchack.tamchack.payload.request.Member.UserSignUpRequest;
+import com.tamchack.tamchack.dto.request.member.RevisePasswordRequest;
+import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
+import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 
 public interface MemberService {
 

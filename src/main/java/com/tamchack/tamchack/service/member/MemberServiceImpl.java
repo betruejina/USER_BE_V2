@@ -1,13 +1,14 @@
 package com.tamchack.tamchack.service.member;
 
-import com.tamchack.tamchack.security.token.JwtProvider;
+import com.tamchack.tamchack.exception.UserNotFoundException;
+import com.tamchack.tamchack.security.token.JWTProvider;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.exception.UserAlreadyEsixtsException;
-import com.tamchack.tamchack.payload.request.Member.RevisePasswordRequest;
-import com.tamchack.tamchack.payload.request.Member.StoreuserSignUpRequest;
-import com.tamchack.tamchack.payload.request.Member.UserSignUpRequest;
+import com.tamchack.tamchack.dto.request.member.RevisePasswordRequest;
+import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
+import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 import com.tamchack.tamchack.repository.StoreRepository;
 import com.tamchack.tamchack.repository.StoreuserRepository;
 import com.tamchack.tamchack.repository.UserRepository;
@@ -21,7 +22,7 @@ public class MemberServiceImpl implements MemberService{
     private final UserRepository userRepository;
     private final StoreuserRepository storeuserRepository;
     private final StoreRepository storeRepository;
-    private final JwtProvider jwtProvider;
+    private final JWTProvider jwtProvider;
 
     @Override
     public void userSignUp(UserSignUpRequest userSignUpRequest) {
@@ -58,9 +59,9 @@ public class MemberServiceImpl implements MemberService{
 
         storeRepository.save(
                 Store.builder()
-                        .storeName(storeuserSignUpRequest.getStoreName())
-                        .storeAddress(storeuserSignUpRequest.getStoreAddress())
-                        .storeNumber(storeuserSignUpRequest.getStoreNumber())
+                        .name(storeuserSignUpRequest.getStoreName())
+                        .address(storeuserSignUpRequest.getStoreAddress())
+                        .number(storeuserSignUpRequest.getStoreNumber())
                         .openingHours(storeuserSignUpRequest.getOpeningHours())
                         .build()
         );
@@ -69,15 +70,24 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public void updateUserPassword(RevisePasswordRequest revisePasswordRequest, String token) {
-        User user = userRepository.findByPassword(jwtProvider.parseToken(token));
-        user.update(revisePasswordRequest.getPassword());
-        userRepository.save(user);
+
+        String password = revisePasswordRequest.getPassword();
+
+        User user = userRepository.findById(jwtProvider.parseToken(token))
+                .orElseThrow(UserNotFoundException::new);
+
+        userRepository.save(user.update(password));
     }
 
     @Override
     public void updateUserStoreuserPassword(RevisePasswordRequest revisePasswordRequest, String token) {
-        Storeuser storeuser = storeuserRepository.findByPassword(jwtProvider.parseToken(token));
-        storeuser.update(revisePasswordRequest.getPassword());
-        storeuserRepository.save(storeuser);
+
+        String password = revisePasswordRequest.getPassword();
+
+        Storeuser storeuser = storeuserRepository.findById(jwtProvider.parseToken(token))
+                .orElseThrow(UserNotFoundException::new);
+
+        storeuserRepository.save(storeuser.update(password));
     }
+
 }

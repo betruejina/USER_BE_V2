@@ -8,5 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StoreRepository extends JpaRepository<Store, Integer> {
-    Page<Store> findByAliStoreName (String storeName, Pageable page);
+
+    Page<Store> findAllByName(String storeName, Pageable page);
+
+    Store findByNumber(String number);
+
+    Store findByOpeningHours(String openingHours);
+
 }

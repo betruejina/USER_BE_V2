@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.payload.request.book;
+package com.tamchack.tamchack.dto.request.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,4 +19,5 @@ public class BookRequest {
     private String publisher;
 
     private MultipartFile image;
+
 }

@@ -1,9 +1,15 @@
 package com.tamchack.tamchack.service.store;
 
+import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.store.Store;
-import com.tamchack.tamchack.payload.response.ApplicationListResponse;
-import com.tamchack.tamchack.payload.response.StoreResponse;
+import com.tamchack.tamchack.dto.request.member.RevisePasswordRequest;
+import com.tamchack.tamchack.dto.request.store.ReviseStoreRequest;
+import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
+import com.tamchack.tamchack.dto.response.store.StoreResponse;
+import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.repository.StoreRepository;
+import com.tamchack.tamchack.repository.StoreuserRepository;
+import com.tamchack.tamchack.security.token.JWTProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,25 +23,38 @@ import java.util.List;
 public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
+    private final StoreuserRepository storeuserRepository;
+    private final JWTProvider jwtProvider;
 
-    /* @Override
+    @Override
     public void updateStoreInfo(ReviseStoreRequest reviseStoreRequest, String token) {
 
-    } */
+        String number = reviseStoreRequest.getStoreNumber();
+        String openingHours = reviseStoreRequest.getOpeningHours();
+
+        Storeuser storeuser = storeuserRepository.findById(jwtProvider.parseToken(token))
+                .orElseThrow(UserNotFoundException::new);
+
+        Store store = storeuser.getStore();
+
+        storeRepository.save(store.changeOption(number, openingHours));
+
+    }
 
     @Override
     public ApplicationListResponse searchStore(String query, Pageable page) {
+
         Page<Store> storePage = storeRepository
-                .findByAliStoreName(query, page);
+                .findAllByName(query, page);
 
         List<StoreResponse> storeResponses = new ArrayList<>();
 
         for(Store store : storePage){
             storeResponses.add(
                     StoreResponse.builder()
-                            .name(store.getStoreName())
-                            .address(store.getStoreAddress())
-                            .number(store.getStoreNumber())
+                            .name(store.getName())
+                            .address(store.getAddress())
+                            .number(store.getNumber())
                             .openingHours(store.getOpeningHours())
                             .build()
             );
@@ -47,4 +66,5 @@ public class StoreServiceImpl implements StoreService {
                 .applicationResponses(storeResponses)
                 .build();
     }
+
 }

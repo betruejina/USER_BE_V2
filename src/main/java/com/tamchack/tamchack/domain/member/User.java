@@ -23,11 +23,8 @@ public class User {
     private String name;
 
     public User update(String password) {
-
         this.password = password;
-
         return this;
-
     }
 
 }

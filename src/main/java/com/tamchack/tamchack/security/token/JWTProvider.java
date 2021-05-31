@@ -3,6 +3,7 @@ package com.tamchack.tamchack.security.token;
 import com.tamchack.tamchack.exception.ExpiredTokenException;
 import com.tamchack.tamchack.exception.InvalidTokenException;
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -10,8 +11,9 @@ import java.util.UUID;
 
 
 @Component
-public class JwtProvider {
-    private static String SECURITY_KEY = System.getenv("SECRET_KEY_BASE");
+public class JWTProvider {
+    @Value("${auth.jwt.secret}")
+    private String SECURITY_KEY;
 
     private String generateToken(Object data, Long expire, String type){
         long nowMillis = System.currentTimeMillis();

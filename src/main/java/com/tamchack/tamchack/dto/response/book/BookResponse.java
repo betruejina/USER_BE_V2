@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.payload.response.book;
+package com.tamchack.tamchack.dto.response.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

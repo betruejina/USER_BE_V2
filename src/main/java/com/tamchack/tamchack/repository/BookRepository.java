@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookRepository extends JpaRepository <Book, Integer> {
-    Page<Book> findAllByBookNameConstains(String bookName, Pageable page);
 
-    Page<Book> findAllByStoreIdAndBookNameContains(Integer storeId, String bookName, Pageable page);
+    Page<Book> findAllByNameContains(String bookName, Pageable page);
+
+    Page<Book> findAllByStoreIdAndNameContains(Integer storeId, String bookName, Pageable page);
+
 }

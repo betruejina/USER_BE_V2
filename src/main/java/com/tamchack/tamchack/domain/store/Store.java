@@ -18,16 +18,18 @@ public class Store {
     @Id
     private int id;
 
-    private String storeName;
+    private String storeuserId;
 
-    private String storeAddress;
+    private String name;
 
-    private String storeNumber;
+    private String address;
+
+    private String number;
 
     private String openingHours;
 
-    public Store changeOption(String storeNumber, String openingHours){
-        this.storeNumber = storeNumber;
+    public Store changeOption(String number, String openingHours) {
+        this.number = number;
         this.openingHours = openingHours;
         return this;
     }

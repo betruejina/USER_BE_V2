@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.payload.request.member;
+package com.tamchack.tamchack.dto.request.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,4 +12,5 @@ public class RevisePasswordRequest {
     private String id;
 
     private String password;
+
 }

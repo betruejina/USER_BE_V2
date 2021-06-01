@@ -12,6 +12,6 @@ public interface MemberService {
 
     void updateUserPassword(RevisePasswordRequest revisePasswordRequest, String token);
 
-    void updateUserStoreuserPassword(RevisePasswordRequest revisePasswordRequest, String token);
+    void updateStoreuserPassword(RevisePasswordRequest revisePasswordRequest, String token);
 
 }

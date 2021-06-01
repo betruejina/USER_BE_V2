@@ -93,7 +93,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void updateUserStoreuserPassword(RevisePasswordRequest revisePasswordRequest, String token) {
+    public void updateStoreuserPassword(RevisePasswordRequest revisePasswordRequest, String token) {
 
         String password = revisePasswordRequest.getPassword();
 

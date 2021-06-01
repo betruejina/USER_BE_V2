@@ -13,7 +13,10 @@ import com.tamchack.tamchack.repository.StoreRepository;
 import com.tamchack.tamchack.repository.StoreuserRepository;
 import com.tamchack.tamchack.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Service;
+
+import javax.swing.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +28,14 @@ public class MemberServiceImpl implements MemberService{
     private final JWTProvider jwtProvider;
 
     @Override
-    public void userSignUp(UserSignUpRequest userSignUpRequest) {
+    public void userSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest) {
 
         userRepository.findById(userSignUpRequest.getId())
+                .ifPresent(u -> {
+                    throw new UserAlreadyEsixtsException();
+                });
+
+        storeuserRepository.findById(storeuserSignUpRequest.getId())
                 .ifPresent(u -> {
                     throw new UserAlreadyEsixtsException();
                 });
@@ -43,9 +51,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void storeuserSignUp(StoreuserSignUpRequest storeuserSignUpRequest) {
+    public void storeuserSignUp(StoreuserSignUpRequest storeuserSignUpRequest, UserSignUpRequest userSignUpRequest) {
 
         storeuserRepository.findById(storeuserSignUpRequest.getId())
+                .ifPresent(u -> {
+                    throw new UserAlreadyEsixtsException();
+                });
+
+        userRepository.findById(userSignUpRequest.getId())
                 .ifPresent(u -> {
                     throw new UserAlreadyEsixtsException();
                 });

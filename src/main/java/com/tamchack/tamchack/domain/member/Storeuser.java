@@ -23,7 +23,7 @@ public class Storeuser {
 
     private String password;
 
-    @OneToOne(mappedBy = "storeuserId")
+    @OneToOne(mappedBy = "id")
     private Store store;
 
     public Storeuser update(String password) {

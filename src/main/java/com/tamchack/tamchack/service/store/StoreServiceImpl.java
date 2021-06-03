@@ -1,12 +1,14 @@
 package com.tamchack.tamchack.service.store;
 
 import com.tamchack.tamchack.domain.member.Storeuser;
+import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.domain.store.Store;
-import com.tamchack.tamchack.dto.request.member.RevisePasswordRequest;
+import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
 import com.tamchack.tamchack.dto.request.store.ReviseStoreRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.UserNotFoundException;
+import com.tamchack.tamchack.repository.BookmarkRepository;
 import com.tamchack.tamchack.repository.StoreRepository;
 import com.tamchack.tamchack.repository.StoreuserRepository;
 import com.tamchack.tamchack.security.token.JWTProvider;
@@ -23,6 +25,7 @@ import java.util.List;
 public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
+    private final BookmarkRepository bookmarkRepository;
     private final StoreuserRepository storeuserRepository;
     private final JWTProvider jwtProvider;
 
@@ -39,6 +42,26 @@ public class StoreServiceImpl implements StoreService {
 
         storeRepository.save(store.changeOption(number, openingHours));
 
+    }
+
+    @Override
+    public void bookmarkStore(BookmarkRequest bookmarkRequest) {
+
+        Integer storeId = bookmarkRequest.getStoreId();
+        String userId = bookmarkRequest.getUserId();
+
+        boolean isBookmarked = bookmarkRepository.existsByStoreIdAndUserId(storeId, userId);
+
+        if(isBookmarked) {
+            bookmarkRepository.deleteByStoreIdAndUserId(storeId, userId);
+        } else {
+            bookmarkRepository.save(
+                    Bookmark.builder()
+                            .storeId(storeId)
+                            .userId(userId)
+                            .build()
+            );
+        }
     }
 
     @Override

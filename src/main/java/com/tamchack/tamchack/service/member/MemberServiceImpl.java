@@ -117,25 +117,24 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public ApplicationListResponse getBookmarkList(String query, Pageable page) {
+    public List<StoreResponse> getBookmarkList(String query) {
 
-        Page<Bookmark> bookmarkPage =bookmarkRepository.findAllByUserId(query, page);
+        List<Bookmark> bookmarks =bookmarkRepository.findAllByUserId(query);
 
-        List<BookmarkResponse> bookmarkResponses = new ArrayList<>();
+        List<StoreResponse> storeResponses = new ArrayList<>();
 
-        for(Bookmark bookmark : bookmarkPage){
-            bookmarkResponses.add(
-                    BookmarkResponse.builder()
-                            .userId(bookmark.getUserId())
-                            .storeId(bookmark.getStoreId())
+        for(Bookmark bookmark : bookmarks){
+            Store store = bookmark.getStore();
+            storeResponses.add(
+                    StoreResponse.builder()
+                            .storeId(store.getId())
+                            .name(store.getName())
+                            .openingHours(store.getOpeningHours())
+                            .number(store.getNumber())
                             .build()
             );
         }
 
-        return ApplicationListResponse.builder()
-                .totalElements((int)bookmarkPage.getTotalElements())
-                .totalPages(bookmarkPage.getTotalPages())
-                .applicationResponses(bookmarkResponses)
-                .build();
+        return storeResponses;
     }
 }

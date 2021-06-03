@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface BookService {
 
-    void inPutBook(BookRequest bookRequest);
+    void inputBook(BookRequest bookRequest);
 
     ApplicationListResponse searchBook(String query, Pageable page);
 

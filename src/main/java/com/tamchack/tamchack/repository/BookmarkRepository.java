@@ -1,9 +1,9 @@
 package com.tamchack.tamchack.repository;
 
 import com.tamchack.tamchack.domain.store.Bookmark;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, String> {
 
@@ -11,6 +11,6 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, String> {
 
     void deleteByStoreIdAndUserId(Integer storeId, String userId);
 
-    Page<Bookmark> findAllByUserId(String userId, Pageable page);
+    List<Bookmark> findAllByUserId(String userId);
 
 }

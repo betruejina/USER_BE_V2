@@ -1,6 +1,13 @@
 package com.tamchack.tamchack.service.member;
 
+import com.tamchack.tamchack.domain.store.Bookmark;
+import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
+import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
+import com.tamchack.tamchack.dto.response.book.BookResponse;
+import com.tamchack.tamchack.dto.response.bookmark.BookmarkResponse;
+import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.UserNotFoundException;
+import com.tamchack.tamchack.repository.BookmarkRepository;
 import com.tamchack.tamchack.security.token.JWTProvider;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
@@ -14,9 +21,13 @@ import com.tamchack.tamchack.repository.StoreuserRepository;
 import com.tamchack.tamchack.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +36,7 @@ public class MemberServiceImpl implements MemberService{
     private final UserRepository userRepository;
     private final StoreuserRepository storeuserRepository;
     private final StoreRepository storeRepository;
+    private final BookmarkRepository bookmarkRepository;
     private final JWTProvider jwtProvider;
 
     @Override
@@ -72,6 +84,7 @@ public class MemberServiceImpl implements MemberService{
 
         storeRepository.save(
                 Store.builder()
+                        .id(storeuserSignUpRequest.getStoreId())
                         .name(storeuserSignUpRequest.getStoreName())
                         .address(storeuserSignUpRequest.getStoreAddress())
                         .number(storeuserSignUpRequest.getStoreNumber())
@@ -103,4 +116,26 @@ public class MemberServiceImpl implements MemberService{
         storeuserRepository.save(storeuser.update(password));
     }
 
+    @Override
+    public ApplicationListResponse getBookmarkList(String query, Pageable page) {
+
+        Page<Bookmark> bookmarkPage =bookmarkRepository.findAllByUserId(query, page);
+
+        List<BookmarkResponse> bookmarkResponses = new ArrayList<>();
+
+        for(Bookmark bookmark : bookmarkPage){
+            bookmarkResponses.add(
+                    BookmarkResponse.builder()
+                            .userId(bookmark.getUserId())
+                            .storeId(bookmark.getStoreId())
+                            .build()
+            );
+        }
+
+        return ApplicationListResponse.builder()
+                .totalElements((int)bookmarkPage.getTotalElements())
+                .totalPages(bookmarkPage.getTotalPages())
+                .applicationResponses(bookmarkResponses)
+                .build();
+    }
 }

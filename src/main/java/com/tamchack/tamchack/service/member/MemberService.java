@@ -4,7 +4,10 @@ import com.tamchack.tamchack.dto.request.member.RevisePasswordRequest;
 import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
 import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
+import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface MemberService {
 
@@ -16,6 +19,6 @@ public interface MemberService {
 
     void updateStoreuserPassword(RevisePasswordRequest revisePasswordRequest, String token);
 
-    ApplicationListResponse getBookmarkList(String query, Pageable page);
+    List<StoreResponse> getBookmarkList(String query);
 
 }

@@ -13,6 +13,6 @@ public class BookmarkRequest {
 
     private Integer storeId;
 
-    private Integer bookId;
+    private String userId;
 
 }

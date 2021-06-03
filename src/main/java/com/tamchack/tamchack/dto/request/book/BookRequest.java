@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class BookRequest {
 
-    private String bookName;
+    private String name;
 
     private String author;
 

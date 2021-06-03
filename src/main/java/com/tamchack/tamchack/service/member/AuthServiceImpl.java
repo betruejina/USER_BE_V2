@@ -26,10 +26,10 @@ public class AuthServiceImpl implements AuthService {
         String id = signInRequest.getId();
         String password = signInRequest.getPassword();
 
-        User user = userRepository.findByIdAndPassword(id, password)
+        return userRepository.findByIdAndPassword(id, password)
+                .map(User::getId)
+                .map(this::createTokenResponse)
                 .orElseThrow(UserNotFoundException::new);
-
-        return createTokenResponse(user.getId());
     }
 
     @Override
@@ -38,15 +38,18 @@ public class AuthServiceImpl implements AuthService {
         String id = signInRequest.getId();
         String password = signInRequest.getPassword();
 
-        Storeuser storeuser = storeuserRepository.findByIdAndPassword(id, password)
+        return storeuserRepository.findByIdAndPassword(id, password)
+                .map(Storeuser::getId)
+                .map(this::createTokenResponse)
                 .orElseThrow(UserNotFoundException::new);
-
-        return createTokenResponse(storeuser.getId());
     }
 
     private TokenResponse createTokenResponse(String id) {
+
         String accessToken = jwtProvider.getAccessToken(id);
+
         String refreshToken = jwtProvider.getRefreshToken(id);
+
         return new TokenResponse(accessToken, refreshToken);
     }
 

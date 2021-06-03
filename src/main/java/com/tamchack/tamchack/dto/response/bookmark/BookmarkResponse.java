@@ -11,7 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BookmarkResponse {
 
-    private String userId;
+    private String name;
 
-    private int storeId;
+    private String openingHours;
+
+    private String number;
+
 }

@@ -18,10 +18,14 @@ public class Book {
     @Id
     private int id;
 
+    private int storeId;
+
     private String name;
 
     private String author;
 
     private String publisher;
+
+    private String imageName;
 
 }

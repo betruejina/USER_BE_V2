@@ -13,6 +13,8 @@ public class StoreuserSignUpRequest {
 
     private String id;
 
+    private int storeId;
+
     private String password;
 
     private String storeName;

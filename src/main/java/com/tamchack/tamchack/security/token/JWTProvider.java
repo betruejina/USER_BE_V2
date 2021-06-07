@@ -21,7 +21,7 @@ public class JWTProvider {
         JwtBuilder builder = Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setIssuedAt(new Date(nowMillis))
-                .setHeaderParam("typ", type)
+                .setHeaderParam("type", type)
                 .setSubject(data.toString())
                 .claim("type", type)
                 .setExpiration(new Date(nowMillis + expire))

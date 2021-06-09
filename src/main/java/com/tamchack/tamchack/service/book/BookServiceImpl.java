@@ -1,10 +1,15 @@
 package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.domain.book.Book;
+import com.tamchack.tamchack.domain.book.Stock;
+import com.tamchack.tamchack.domain.book.StockKey;
+import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
+import com.tamchack.tamchack.dto.request.book.StockRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.book.BookResponse;
 import com.tamchack.tamchack.repository.BookRepository;
+import com.tamchack.tamchack.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +28,7 @@ import java.util.UUID;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final StockRepository stockRepository;
 
     @Value("${book.image.path}")
     private String imagePath;
@@ -46,6 +52,26 @@ public class BookServiceImpl implements BookService {
 
         bookRequest.getImage().transferTo(file);
 
+    }
+
+    @Override
+    public void bookStock(StockRequest stockRequest) {
+
+        Book book = stockRequest.getBookId();
+        int storeId = stockRequest.getStoreId();
+
+        boolean isStocked = stockRepository.existsByStoreIdAndBook(storeId, book);
+
+        if(isStocked) {
+            stockRepository.deleteByStoreIdAndBook(storeId, book);
+        } else {
+            stockRepository.save(
+                    Stock.builder()
+                            .book(book)
+                            .storeId(storeId)
+                            .build()
+            );
+        }
     }
 
     @Override

@@ -1,13 +1,12 @@
 package com.tamchack.tamchack.service.member;
 
+import com.tamchack.tamchack.domain.book.Book;
+import com.tamchack.tamchack.domain.book.Stock;
 import com.tamchack.tamchack.domain.store.Bookmark;
-import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
-import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
-import com.tamchack.tamchack.dto.response.book.BookResponse;
-import com.tamchack.tamchack.dto.response.bookmark.BookmarkResponse;
+import com.tamchack.tamchack.dto.response.book.StockResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.UserNotFoundException;
-import com.tamchack.tamchack.repository.BookmarkRepository;
+import com.tamchack.tamchack.repository.*;
 import com.tamchack.tamchack.security.token.JWTProvider;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
@@ -16,16 +15,9 @@ import com.tamchack.tamchack.exception.UserAlreadyEsixtsException;
 import com.tamchack.tamchack.dto.request.member.RevisePasswordRequest;
 import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
 import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
-import com.tamchack.tamchack.repository.StoreRepository;
-import com.tamchack.tamchack.repository.StoreuserRepository;
-import com.tamchack.tamchack.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.SpringApplication;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +29,8 @@ public class MemberServiceImpl implements MemberService{
     private final StoreuserRepository storeuserRepository;
     private final StoreRepository storeRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final BookRepository bookRepository;
+    private final StockRepository stockRepository;
     private final JWTProvider jwtProvider;
 
     @Override
@@ -117,9 +111,33 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<StoreResponse> getBookmarkList(String query) {
+    public List<StockResponse> getStockList(Integer storeId) {
 
-        List<Bookmark> bookmarks =bookmarkRepository.findAllByUserId(query);
+        List<Book> books = bookRepository.findAll();
+
+        List<StockResponse> stockResponses = new ArrayList<>();
+
+        for(Book book : books){
+            boolean stock = stockRepository.existsByStoreIdAndBook(storeId, book);
+            stockResponses.add(
+                    StockResponse.builder()
+                            .bookName(book.getName())
+                            .author(book.getAuthor())
+                            .publisher(book.getPublisher())
+                            .stock(stock)
+                            .build()
+            );
+        }
+
+        return stockResponses;
+    }
+
+    @Override
+    public List<StoreResponse> getBookmarkList(String token) {
+
+        String userId = jwtProvider.parseToken(token);
+
+        List<Bookmark> bookmarks = bookmarkRepository.findAllByUserId(userId);
 
         List<StoreResponse> storeResponses = new ArrayList<>();
 

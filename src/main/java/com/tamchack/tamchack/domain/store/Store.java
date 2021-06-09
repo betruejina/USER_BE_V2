@@ -28,6 +28,10 @@ public class Store {
 
     private String openingHours;
 
+    private double lat;
+
+    private double lng;
+
     public Store changeOption(String number, String openingHours) {
         this.number = number;
         this.openingHours = openingHours;

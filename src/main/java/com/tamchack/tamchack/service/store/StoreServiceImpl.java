@@ -50,10 +50,10 @@ public class StoreServiceImpl implements StoreService {
         Store storeId = bookmarkRequest.getStoreId();
         String userId = bookmarkRequest.getUserId();
 
-        boolean isBookmarked = bookmarkRepository.existsByStoreIdAndUserId(storeId, userId);
+        boolean isBookmarked = bookmarkRepository.existsByStoreAndUserId(storeId, userId);
 
         if(isBookmarked) {
-            bookmarkRepository.deleteByStoreIdAndUserId(storeId, userId);
+            bookmarkRepository.deleteByStoreAndUserId(storeId, userId);
         } else {
             bookmarkRepository.save(
                     Bookmark.builder()

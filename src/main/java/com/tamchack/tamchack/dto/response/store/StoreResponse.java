@@ -21,4 +21,8 @@ public class StoreResponse {
 
     private String openingHours;
 
+    private double lat;
+
+    private double lng;
+
 }

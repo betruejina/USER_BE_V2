@@ -47,7 +47,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public void bookmarkStore(BookmarkRequest bookmarkRequest) {
 
-        Integer storeId = bookmarkRequest.getStoreId();
+        Store storeId = bookmarkRequest.getStoreId();
         String userId = bookmarkRequest.getUserId();
 
         boolean isBookmarked = bookmarkRepository.existsByStoreIdAndUserId(storeId, userId);
@@ -57,7 +57,7 @@ public class StoreServiceImpl implements StoreService {
         } else {
             bookmarkRepository.save(
                     Bookmark.builder()
-                            .storeId(storeId)
+                            .store(storeId)
                             .userId(userId)
                             .build()
             );
